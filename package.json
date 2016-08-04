@@ -1,0 +1,14 @@
+{
+  "name": "generator-zoom-adds-boilerplate",
+  "version": "0.1.0",
+  "description": "Generator to ceate ads boilerplates.",
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.24.1"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "preset": "google",
+  "validateLineBreaks": "LF",
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+  "maximumLineLength": {
+    "value": 140,
+    "allowComments": true,
+    "allowRegex": true
+  },
+  "disallowMultipleVarDecl": null,
+  "disallowSpacesInsideObjectBrackets": null,
+  "requireSpacesInsideObjectBrackets": "allButNested",
+  "validateParameterSeparator": ", ",
+  "requireCommaBeforeLineBreak": true,
+  "requireCapitalizedConstructors": true,
+  "requireParenthesesAroundIIFE": true,
+  "requireCurlyBraces": [
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch",
+    "default"
+  ],
+  "disallowKeywords": ["with"],
+  "excludeFiles": ["node_modules/**"]
+}
