@@ -47,12 +47,30 @@ module.exports = generators.Base.extend({
         adsPropsArray = this.ads;
 
     adsPropsArray.forEach(function(adProps, index) {
-      console.log(adProps);
+      var adNumber = index + 1,
+          basePath;
+
+      adProps.bannerName = adProps.platform + '-' + adNumber;
+      basePath = 'app/' + adProps.bannerName;
+
       this._copyTplWithContext(
-        'test.txt',
-        'test-' + index + '.txt',
+        'platforms/' + adProps.platform,
+        basePath,
         adProps
       );
+
+      this._copyTplWithContext(
+        'gulp',
+        basePath + '/gulp',
+        adProps
+      );
+
+      this._copyTplWithContext(
+        'rootfiles',
+        basePath,
+        adProps
+      );
+
     }.bind(self));
 
     // this._copyTplWithContext(
