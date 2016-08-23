@@ -262,5 +262,8 @@ module.exports = {
       }]
     }],
 
+  }, {
+    code: 'openx',
+    name: 'OpenX'
   }]
 };
