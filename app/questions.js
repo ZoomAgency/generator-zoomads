@@ -1,7 +1,9 @@
 'use strict';
 
 var platformsData = require('./data').platforms,
-    _ = require('lodash');
+    _find = require('lodash/find');
+
+var self = {};
 
 module.exports = [{
   type: 'rawlist',
@@ -21,34 +23,47 @@ module.exports = [{
   default: 0
 }, {
   when: function(response) {
-    return response.category === 'rising-stars';
+    self.formatsChoices = formatsChoices(response.platform, response.category);
+
+    return hasChoices(self.formatsChoices);
   },
   type: 'rawlist',
   name: 'format',
   message: '¿Qué formato deseas crear?',
   choices: function(response) {
-    return formatsChoices(response.platform, response.category);
+    return self.formatsChoices;
   },
   default: 0
 }, {
   when: function(response) {
-    return response.format === 'filmstrip';
+    self.dimensionsChoices = dimensionsChoices(response.platform, response.category, response.format);
+
+    return hasChoices(self.dimensionsChoices);
   },
   type: 'rawlist',
   name: 'dimensions',
   message: '¿Cuales son las dimensiones del banner? (WxH en pixeles)',
   choices: function(response) {
-    return dimensionsChoices(response.platform, response.category, response.format);
+    return self.dimensionsChoices;
   },
-  default: 1
+  default: 0
 }];
 
 function platformsChoices() {
   return generateChoicesType('name-code', platformsData);
 }
 
+function hasChoices(choicesArray) {
+  var hasChoicesResult = false;
+
+  if (choicesArray.length > 0)
+    hasChoicesResult = true;
+
+  return hasChoicesResult;
+}
+
 function categoriesChoices(platform) {
-  var categories = null,
+  var categories = [],
       categoriesData;
 
   categoriesData = getCategoriesOptions(platform);
@@ -59,7 +74,7 @@ function categoriesChoices(platform) {
 }
 
 function formatsChoices(platform, category) {
-  var formats = null,
+  var formats = [],
       formatsData;
 
   formatsData = getFormatsOptions(platform, category);
@@ -70,7 +85,7 @@ function formatsChoices(platform, category) {
 }
 
 function dimensionsChoices(platform, category, format) {
-  var dimensions = null,
+  var dimensions = [],
       dimensionsData;
 
   dimensionsData = getDimensionsOptions(platform, category, format);
@@ -81,7 +96,7 @@ function dimensionsChoices(platform, category, format) {
 }
 
 function getCategoriesOptions(platform) {
-  var categoryData = null,
+  var categoryData = [],
       platformData;
 
   platformData = getPlatformData(platform);
@@ -91,12 +106,12 @@ function getCategoriesOptions(platform) {
 }
 
 function getFormatsOptions(platform, category) {
-  var formatsData = null,
+  var formatsData = [],
       categoriesData,
       categoryData;
 
   categoriesData = getCategoriesOptions(platform);
-  categoryData = _.find(categoriesData, { code: category });
+  categoryData = _find(categoriesData, { code: category });
 
   formatsData = categoryData.formats;
 
@@ -109,7 +124,7 @@ function getDimensionsOptions(platform, category, format) {
       formatData;
 
   allFormatsData = getFormatsOptions(platform, category);
-  formatData = _.find(allFormatsData, { code: format });
+  formatData = _find(allFormatsData, { code: format });
 
   dimensionsData = getDimensionsOfFormat(formatData);
 
@@ -117,11 +132,11 @@ function getDimensionsOptions(platform, category, format) {
 }
 
 function getPlatformData(platformCode) {
-  return _.find(platformsData, { code: platformCode });
+  return _find(platformsData, { code: platformCode });
 }
 
 function getDimensionsOfFormat(formatData) {
-  var dimensionsData = null,
+  var dimensionsData = [],
       optionsData;
 
   if (formatData.options) {
