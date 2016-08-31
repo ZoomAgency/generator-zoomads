@@ -27,7 +27,8 @@ module.exports = generators.Base.extend({
       var needMoreAds = {
         type: 'confirm',
         name: 'moreAds',
-        message: '¿Necesitas crear un nuevo formato?'
+        message: '¿Necesitas crear un nuevo formato?',
+        default: false
       };
 
       return self.prompt([needMoreAds]).then(function(props) {
@@ -50,11 +51,11 @@ module.exports = generators.Base.extend({
       var adNumber = index + 1,
           basePath;
 
-      adProps.bannerName = adProps.platform + '-' + adNumber;
-      basePath = 'app/' + adProps.bannerName;
+      adProps.bannerName = adProps.format + '-' + adNumber;
+      basePath = 'app/' + adProps.platform + '/' + adProps.bannerName;
 
       this._copyTplWithContext(
-        'platforms/' + adProps.platform,
+        'platforms/' + adProps.platform + '/' + adProps.format,
         basePath,
         adProps
       );
