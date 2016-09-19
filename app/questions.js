@@ -6,7 +6,7 @@ var platformsData = require('./data').platforms,
 var self = {};
 
 module.exports = [{
-  type: 'rawlist',
+  type: 'list',
   name: 'platform',
   message: '¿Con qué soporte trabajas?',
   choices: function() {
@@ -14,7 +14,7 @@ module.exports = [{
   },
   default: 0
 }, {
-  type: 'rawlist',
+  type: 'list',
   name: 'category',
   message: '¿A qué categoría pertenece el formato que deseas crear?',
   choices: function(response) {
@@ -27,7 +27,7 @@ module.exports = [{
 
     return hasChoices(self.formatsChoices);
   },
-  type: 'rawlist',
+  type: 'list',
   name: 'format',
   message: '¿Qué formato deseas crear?',
   choices: function(response) {
@@ -40,7 +40,7 @@ module.exports = [{
 
     return hasChoices(self.dimensionsChoices);
   },
-  type: 'rawlist',
+  type: 'list',
   name: 'dimensions',
   message: '¿Cuales son las dimensiones del banner? (WxH en pixeles)',
   choices: function(response) {
